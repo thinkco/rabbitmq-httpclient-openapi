@@ -28,7 +28,7 @@ generate_aspnetcore() {
     "useCollection": true,
     "returnICollection": true,
     "netCoreProjectFile": true,
-    "validatable": true,
+    "validatable": false,
     "optionalAssemblyInfo" : true
 }
 EOT

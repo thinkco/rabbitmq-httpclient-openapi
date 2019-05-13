@@ -2572,17 +2572,10 @@ definitions:
         minimum: 0
       ackmode:
         type: string
-        enum:
-        - ack_requeue_true
-        - ack_requeue_false
-        default: ack_requeue_false
+        default: ack_requeue_true
       encoding:
         type: string
         default: string
-        enum:
-        - string
-        - base64
-        - auto
       truncate:
         type: integer
         minimum: 0

@@ -25,8 +25,8 @@ generate_aspnetcore() {
     "hideGenerationTimestamp": true,
     "sortParamsByRequiredFlag": true,
     "useDateTimeOffset": true,
-    "useCollection": true,
-    "returnICollection": true,
+    "useCollection": false,
+    "returnICollection": false,
     "netCoreProjectFile": true,
     "validatable": false,
     "optionalAssemblyInfo" : true

@@ -562,23 +562,15 @@ paths:
           "$ref": "#/definitions/PublishRequest"
         x-examples:
           application/json:
+            routing_key: shared.key
+            payload: This is the payload
+            payload_encoding: string
             properties:
-              application_id: et labore incididunt dol
-              correlation_id: ut Excepteur aliquip ex pariatur
-              message_id: quis
-              user_id: quis
-              timestamp: 47703331
-              content_type: id tempor labore anim
-              delivery_mode: -12066292
-              priority: 55798254
-              cluster_id: voluptate deserunt
-              headers:
-              - name: reprehenderit labore
-              - name: ea pariatur mollit fugiat labore
-              - name: qui nostrud enim
-            routing_key: magna
-            payload: anim
-            payload_encoding: et
+              app_id: ApplicationId
+              correlation_id: CorrelationId
+              message_id: MessageId
+              user_id: testuser
+              delivery_mode: 2
       responses:
         '200':
           description: ''
@@ -2462,16 +2454,11 @@ definitions:
       routed:
         type: boolean
     title: PublishResponse
-  MessageHeader:
-    type: object
-    properties:
-      name:
-        type: string
-    title: MessageHeader
   MessageProperties:
     type: object
+    title: MessageProperties
     properties:
-      application_id:
+      app_id:
         type: string
       correlation_id:
         type: string
@@ -2485,15 +2472,11 @@ definitions:
         type: string
       delivery_mode:
         type: integer
+        description: 1 = Non Persistent, 2 = Persistent
       priority:
         type: integer
       cluster_id:
         type: string
-      headers:
-        type: array
-        items:
-          "$ref": "#/definitions/MessageHeader"
-    title: MessageProperties
   PublishRequest:
     type: object
     title: PublishRequest
@@ -2504,8 +2487,16 @@ definitions:
         type: string
       payload_encoding:
         type: string
+        enum:
+        - string
+        - base64
+        default: string
       properties:
-        "$ref": "#/definitions/MessageProperties"
+        "$ref": "#/definitions/PublishProperties"
+    required:
+    - routing_key
+    - payload
+    - payload_encoding
   ExchangeRequest:
     type: object
     title: ExchangeRequest
@@ -2573,16 +2564,35 @@ definitions:
         type: string
   ConsumeRequest:
     type: object
+    title: ConsumeRequest
     properties:
       count:
         type: integer
+        default: 1
+        minimum: 0
       ackmode:
         type: string
+        enum:
+        - ack_requeue_true
+        - ack_requeue_false
+        default: ack_requeue_false
       encoding:
         type: string
+        default: string
+        enum:
+        - string
+        - base64
+        - auto
       truncate:
         type: integer
-    title: ConsumeRequest
+        minimum: 0
+        maximum: 5000000
+        default: 1000000
+    required:
+    - count
+    - ackmode
+    - encoding
+    - truncate
   QueueAction:
     type: object
     required:
@@ -2594,6 +2604,22 @@ definitions:
         - sync
         - cancel_sync
     title: QueueAction
+  PublishProperties:
+    type: object
+    title: PublishProperties
+    properties:
+      app_id:
+        type: string
+      correlation_id:
+        type: string
+      message_id:
+        type: string
+      user_id:
+        type: string
+      delivery_mode:
+        type: integer
+        description: 1 = Non Persistent, 2 = Persistent
+        default: 2
 basePath: "/rabbitmq/api"
 produces:
 - application/json

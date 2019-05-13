@@ -20,7 +20,7 @@ generate_aspnetcore() {
     cat <<EOT >> $CONFIG_FILE
 {
     "packageName" : "$PACKAGE_NETCORE",
-    "packageVersion": "1.0.2",
+    "packageVersion": "1.0.3",
     "targetFramework": "netcoreapp2.0",
     "hideGenerationTimestamp": true,
     "sortParamsByRequiredFlag": true,
@@ -28,7 +28,8 @@ generate_aspnetcore() {
     "useCollection": true,
     "returnICollection": true,
     "netCoreProjectFile": true,
-    "validatable": true
+    "validatable": true,
+    "optionalAssemblyInfo" : true
 }
 EOT
 
